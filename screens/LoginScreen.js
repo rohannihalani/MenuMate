@@ -21,21 +21,22 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigation.navigate("Home");
-      }
-    });
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       navigation.navigate("Home");
+  //     }
+  //   });
 
-    return unsubscribe;
-  }, []);
+  //   return unsubscribe;
+  // }, []);
 
   const handleSignUp = () => {
     createUserWithEmailAndPassword(auth, email, password).then(
       (userCredentials) => {
         const user = userCredentials.user;
         console.log("Registered in with: ", user.email);
+        navigation.navigate("Home");
         // }).catch((error) => {
         //   const errorCode = error.code;
         //   const errorMessage = error.message;
@@ -48,6 +49,7 @@ const LoginScreen = () => {
       (userCredentials) => {
         const user = userCredentials.user;
         console.log("Logged in with: ", user.email);
+        navigation.navigate("Home");
       }
     );
   };
