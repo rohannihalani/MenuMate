@@ -6,6 +6,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { auth } from "../firebase";
 import {
@@ -13,13 +14,18 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth/react-native";
 import { useNavigation } from "@react-navigation/core";
-import { onAuthStateChanged } from "firebase/auth/react-native";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const appIcon = require("../assets/MenuMateLogo.png");
+
   const navigation = useNavigation();
+
+  // const secondaryColor = "#505c48";
+  const secondaryColor = "#8b4513";
+  // const secondaryColor = "black";
 
   // useEffect(() => {
   //   const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -36,7 +42,7 @@ const LoginScreen = () => {
       (userCredentials) => {
         const user = userCredentials.user;
         console.log("Registered in with: ", user.email);
-        navigation.navigate("Home");
+        navigation.navigate("Start");
         // }).catch((error) => {
         //   const errorCode = error.code;
         //   const errorMessage = error.message;
@@ -56,11 +62,15 @@ const LoginScreen = () => {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <View style={styles.upperContainer}>
+        <Image source={appIcon} style={styles.appIcon} />
+      </View>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
           value={email}
           onChangeText={(text) => setEmail(text)}
+          selectionColor={secondaryColor}
           style={styles.input}
         />
         <TextInput
@@ -68,6 +78,7 @@ const LoginScreen = () => {
           value={password}
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
+          selectionColor={secondaryColor}
           secureTextEntry
         />
       </View>
@@ -93,6 +104,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#ABC19B",
   },
   inputContainer: { width: "80%" },
   input: {
@@ -101,6 +113,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
+    color: "#8b4513",
   },
   buttonContainer: {
     width: "60%",
@@ -109,7 +122,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   button: {
-    backgroundColor: "#0782F9",
+    backgroundColor: "#8b4513",
     width: "100%",
     padding: 15,
     borderRadius: 10,
@@ -119,8 +132,14 @@ const styles = StyleSheet.create({
   buttonOutline: {
     backgroundColor: "white",
     marginTop: 5,
-    borderColor: "#0782F9",
+    borderColor: "#8b4513ro",
     borderWidth: 2,
   },
-  buttonOutlineText: { color: "#0782F9", fontWeight: 700, fontSize: 16 },
+  buttonOutlineText: { color: "#8b4513", fontWeight: 700, fontSize: 16 },
+  appIcon: {
+    width: 200,
+    height: 300,
+    resizeMode: "contain",
+    marginTop: 0,
+  },
 });
