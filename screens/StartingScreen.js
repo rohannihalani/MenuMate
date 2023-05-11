@@ -15,7 +15,7 @@ const HomeScreen = () => {
   const navigation = useNavigation();
 
   const getStarted = () => {
-    navigation.navigate("AllergyPref");
+    navigation.navigate("DietPref");
   };
 
   return (
@@ -80,6 +80,6 @@ const styles = StyleSheet.create({
     color: "white",
     marginTop: 50,
     marginBottom: 20,
-    fontWeight: 700,
+    fontWeight: 500,
   },
 });
