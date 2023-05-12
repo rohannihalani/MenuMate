@@ -11,41 +11,52 @@ import {
   FlatList,
 } from "react-native";
 
-import { collection, addDoc, setDoc, doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  setDoc,
+  doc,
+  getDoc,
+  arrayUnion,
+  arrayRemove,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../firebase";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
+import { QuerySnapshot } from "firebase/firestore";
+import { onSnapshot } from "firebase/firestore";
 
 const appIcon = require("../assets/MenuMateLogo.png");
-
-const Item = ({ title }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{`\u2022 ${title}`}</Text>
-  </View>
-);
 
 const HomeScreen = () => {
   const navigation = useNavigation();
 
-  const allergyList = getDoc(doc(db, "users", auth.currentUser?.email));
-
-  const DATA = [
-    {
-      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-      title: "First Item",
-    },
-    {
-      id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-      title: "Second Item",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-145571e29d72",
-      title: "Third Item",
-    },
-  ];
+  const allAllergies = [];
 
   const [allergy, setAllergy] = useState("");
 
+  const allergyRef = doc(db, "users", auth.currentUser?.email);
+
+  const unsub = onSnapshot(doc(db, "users", auth.currentUser?.email), (doc) => {
+    // console.log("Current data: ", doc.data());
+    const internalArray = doc.data();
+    const internalAllergyArray = internalArray.allergies;
+    internalAllergyArray.forEach((item) => {
+      allAllergies.push(item);
+    });
+  });
+
+  const addAllergy = async () => {
+    await updateDoc(allergyRef, {
+      allergies: arrayUnion(allergy),
+    });
+    setAllergy("");
+  };
+
+  const homeScreenRedirect = () => {
+    navigation.navigate("Home");
+  };
   return (
     <View style={styles.container} behavior="padding">
       <View style={styles.upperContainer}>
@@ -63,24 +74,29 @@ const HomeScreen = () => {
             onChangeText={(text) => setAllergy(text)}
             selectionColor="#8b4513"
             style={styles.input}
+            clearButtonMode="always"
           />
         </View>
         <View style={styles.addButtonContainer}>
-          <TouchableOpacity style={styles.addButton}>
+          <TouchableOpacity style={styles.addButton} onPress={addAllergy}>
             <Text style={styles.addButtonText}>Add</Text>
           </TouchableOpacity>
         </View>
       </View>
       <View style={styles.allergyDisplayContainer}>
         <FlatList
-          data={DATA}
-          renderItem={({ item }) => <Item title={item.title} />}
-          keyExtractor={(item) => item.id}
+          style={styles.flatList}
+          data={allAllergies}
+          renderItem={({ item }) => (
+            <View>
+              <Text style={styles.title}>{`\u2022 ${item}`}</Text>
+            </View>
+          )}
         />
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => {}}>
+        <TouchableOpacity style={styles.button} onPress={homeScreenRedirect}>
           <Text style={styles.buttonText}>Continue</Text>
         </TouchableOpacity>
       </View>
@@ -170,5 +186,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
+  },
+  flatList: {
+    height: "50%",
   },
 });
