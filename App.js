@@ -7,6 +7,9 @@ import HomeScreen from "./screens/HomeScreen";
 import StartingScreen from "./screens/StartingScreen";
 import AllergyPref from "./screens/AllergyPref";
 import DietPref from "./screens/DietPref";
+import EditAllergyScreen from "./screens/EditAllergy";
+import ProfileScreen from "./screens/Profile";
+import PostScreen from "./screens/Post";
 
 const Stack = createNativeStackNavigator();
 
@@ -38,6 +41,21 @@ export default function App() {
           options={{ headerShown: false }}
           name="DietPref"
           component={DietPref}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Edit"
+          component={EditAllergyScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Post"
+          component={PostScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Profile"
+          component={ProfileScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

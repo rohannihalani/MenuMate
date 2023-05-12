@@ -5,21 +5,25 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 import BottomBar from "../components/bottomBar";
 
-const HomeScreen = () => {
+const ProfileScreen = () => {
   const iconColor = "#8b4514";
   const selectedColor = "#ABC19B";
 
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
+      <Text>Profile Screen</Text>
       <Button
         title="Click Here"
         onPress={() => alert("button clicked!")}
       ></Button>
       <View style={styles.bottomBarContainer}>
-        <TouchableOpacity onPress={() => {}}>
-          <Icon name="home" size={40} color={selectedColor}></Icon>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Home");
+          }}
+        >
+          <Icon name="home" size={40} color={iconColor}></Icon>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -40,14 +44,14 @@ const HomeScreen = () => {
             navigation.navigate("Profile");
           }}
         >
-          <Icon name="user-circle" size={40} color={iconColor}></Icon>
+          <Icon name="user-circle" size={40} color={selectedColor}></Icon>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-export default HomeScreen;
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
