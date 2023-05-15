@@ -42,6 +42,8 @@ const LoginScreen = () => {
       (userCredentials) => {
         const user = userCredentials.user;
         console.log("Registered in with: ", user.email);
+        setEmail("");
+        setPassword("");
         navigation.navigate("Start");
         // }).catch((error) => {
         //   const errorCode = error.code;
@@ -55,6 +57,8 @@ const LoginScreen = () => {
       (userCredentials) => {
         const user = userCredentials.user;
         console.log("Logged in with: ", user.email);
+        setEmail("");
+        setPassword("");
         navigation.navigate("Home");
       }
     );

@@ -10,6 +10,8 @@ import DietPref from "./screens/DietPref";
 import EditAllergyScreen from "./screens/EditAllergy";
 import ProfileScreen from "./screens/Profile";
 import PostScreen from "./screens/Post";
+import CreateRest from "./screens/createRest";
+import AddMenu from "./screens/AddMenu";
 
 const Stack = createNativeStackNavigator();
 
@@ -56,6 +58,16 @@ export default function App() {
           options={{ headerShown: false }}
           name="Profile"
           component={ProfileScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Create"
+          component={CreateRest}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="AddMenu"
+          component={AddMenu}
         />
       </Stack.Navigator>
     </NavigationContainer>
